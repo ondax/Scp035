@@ -13,7 +13,7 @@ using Mirror;
 
 namespace Scp035
 {
-    public class Handlers : RoundStartHandler, PickupItemHandler, RoundEndHandler, PlayerDieEventHandler, PlayerHurtHandler, PlayerLeaveHandler
+    public class Handlers : RoundStartHandler, PickupItemHandler, RoundEndHandler, PlayerDieEventHandler, PlayerHurtHandler, PlayerLeaveHandler, RemoteAdminEventHandler
     {
         public static Pickup Scp035Pickup;
         public static Player Scp035Player;
@@ -152,6 +152,14 @@ namespace Scp035
                 Scp035Pickup = pickup;
             }
             CheckOnlySCPs();
+        }
+
+        public void OnRemoteAdminCommand(RemoteAdminCommandEvent ev)
+        {
+            if (ev.Command.ToUpper().StartsWith("FORCECLASS"))
+            {
+                CheckOnlySCPs();
+            }
         }
     }
 }

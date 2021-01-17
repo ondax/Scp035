@@ -90,4 +90,35 @@ namespace Scp035
             }
         }
     }
+    public class Spawn035ItemCommand : CommandHandler
+    {
+        public string Command => "spawn035item";
+
+        public string Usage => "spawn035item <player> <item>";
+
+        public string Aliases => "spawn035 spawn035pickup";
+
+        public string Execute(Player sender, string[] args)
+        { 
+            if (args.Length < 1)
+            {
+                Pickup pickup = Map.SpawnItem(Handlers.SCP035ItemType, sender.Position);
+                Handlers.Scp035Pickup = pickup;
+                return "Spawned 035 item at your position";
+            }
+            else if(args.Length==1)
+            {
+                Pickup pickup = Map.SpawnItem(Handlers.SCP035ItemType, args[0].GetPlayer().Position);
+                Handlers.Scp035Pickup = pickup;
+                return "Spawned 035 item at your position";
+            }
+            else
+            {
+                Pickup pickup = Map.SpawnItem(args[1].GetItem(), args[0].GetPlayer().Position);
+                Handlers.SCP035ItemType = args[1].GetItem();
+                Handlers.Scp035Pickup = pickup;
+                return "Spawned 035 item at your position";
+            }
+        }
+    }
 }
